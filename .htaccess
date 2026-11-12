@@ -1,0 +1,16 @@
+AddDefaultCharset UTF-8
+AddType text/vcard .vcf
+DirectoryIndex index.html
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{HTTP_HOST} ^www\.evakuator-dzhankoy\.ru$ [NC]
+  RewriteRule ^(.*)$ https://evakuator-dzhankoy.ru/$1 [R=301,L]
+</IfModule>
+
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType image/jpeg "access plus 30 days"
+  ExpiresByType image/png "access plus 30 days"
+  ExpiresByType image/svg+xml "access plus 30 days"
+</IfModule>
