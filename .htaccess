@@ -4,8 +4,8 @@ DirectoryIndex index.html
 
 <IfModule mod_rewrite.c>
   RewriteEngine On
-  RewriteCond %{HTTP_HOST} ^www\.evakuator-dzhankoy\.ru$ [NC]
-  RewriteRule ^(.*)$ https://evakuator-dzhankoy.ru/$1 [R=301,L]
+  RewriteCond %{HTTP_HOST} ^www\.evakuator82\.ru$ [NC]
+  RewriteRule ^(.*)$ https://evakuator82.ru/$1 [R=301,L]
 </IfModule>
 
 <IfModule mod_expires.c>
