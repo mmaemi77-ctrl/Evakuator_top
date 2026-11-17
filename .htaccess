@@ -4,7 +4,17 @@ DirectoryIndex index.html
 
 <IfModule mod_rewrite.c>
   RewriteEngine On
+
+  # www.evakuator82.ru → evakuator82.ru
   RewriteCond %{HTTP_HOST} ^www\.evakuator82\.ru$ [NC]
+  RewriteRule ^(.*)$ https://evakuator82.ru/$1 [R=301,L]
+
+  # http → https. Хостинг может стоять за прокси, поэтому
+  # переадресуем, только если ни один признак не говорит о https
+  RewriteCond %{HTTPS} !=on
+  RewriteCond %{HTTP:X-Forwarded-Proto} !https [NC]
+  RewriteCond %{HTTP:X-HTTPS} !1
+  RewriteCond %{SERVER_PORT} !^443$
   RewriteRule ^(.*)$ https://evakuator82.ru/$1 [R=301,L]
 </IfModule>
 
