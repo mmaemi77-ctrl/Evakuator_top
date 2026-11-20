@@ -724,13 +724,26 @@ const fallbackActions=()=>`
   <a class="btn wa" href="${esc(waLink(HELLO+" Сейчас отправлю, где я."))}" target="_blank" rel="noopener" data-goal="geo_fallback">${ICON("wa")}Открыть WhatsApp</a>
   <div class="sh-row"><button type="button" class="btn line" data-geo-retry>Попробовать ещё раз</button><a class="btn line" href="tel:+79785442676">${ICON("phone")}Позвонить</a></div>`;
 const manualHint=`Или отправьте точку в&nbsp;самом WhatsApp: скрепка → <b>«Местоположение»</b>.`;
+/* на iPhone у каждого браузера своя строка в «Службах геолокации»: Safari — «Сайты Safari», остальные — по названию приложения */
+function iosBrowser(){
+  if(/YaBrowser|YaApp|YaSearchBrowser/i.test(UA))return "Яндекс Браузер";
+  if(/CriOS/.test(UA))return "Chrome";
+  if(/FxiOS/.test(UA))return "Firefox";
+  if(/EdgiOS/.test(UA))return "Edge";
+  if(/OPT\/|OPiOS/.test(UA))return "Opera";
+  return null;
+}
+function iosLocationPath(){
+  const app=iosBrowser();
+  return `Настройки → Конфиденциальность и&nbsp;безопасность → Службы геолокации → ${app?`«${app}»`:"Сайты Safari"}`;
+}
 function preciseHint(){
-  if(IS_IOS)return `Чтобы точнее: <b>Настройки → Конфиденциальность и&nbsp;безопасность → Службы геолокации → Сайты Safari</b>, включите <b>«Точная геопозиция»</b> и&nbsp;нажмите «Обновить».`;
+  if(IS_IOS)return `Чтобы точнее: <b>${iosLocationPath()}</b>, включите <b>«Точная геопозиция»</b> и&nbsp;нажмите «Обновить».`;
   return `Чтобы точнее, включите GPS и&nbsp;нажмите «Обновить».`;
 }
 function permissionHint(){
   if(IN_APP)return `Сайт открыт внутри приложения, и&nbsp;оно не&nbsp;даёт определить место. Откройте сайт в&nbsp;Safari или Chrome: меню <b>···</b> → <b>«Открыть в&nbsp;браузере»</b>.`;
-  if(IS_IOS)return `Разрешите доступ: <b>Настройки → Конфиденциальность и&nbsp;безопасность → Службы геолокации → Сайты Safari → «При использовании»</b>. Потом нажмите «Попробовать ещё раз».`;
+  if(IS_IOS)return `Разрешите доступ: <b>${iosLocationPath()} → «При использовании»</b>. Потом нажмите «Попробовать ещё раз».`;
   return `Нажмите на&nbsp;значок слева от&nbsp;адреса сайта → <b>Разрешения → Местоположение → Разрешить</b>. Потом нажмите «Попробовать ещё раз».`;
 }
 const VIEWS={
